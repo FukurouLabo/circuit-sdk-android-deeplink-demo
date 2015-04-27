@@ -35,7 +35,20 @@ public class ItemDetailActivity extends ActionBarActivity {
         itemDao = new ItemDao(helper.getWritableDatabase());
         purchaseDao = new PurchaseDao(helper.getWritableDatabase());
         Intent intent = getIntent();
-        item = itemDao.findById(intent.getIntExtra("itemId", 1));
+        /**
+         * Circuit SDK導入時の編集箇所 - ここから
+         *
+         * intent.getStringExtraでURLスキームに付与したパラメータの値を取得することができる
+         */
+        String deepLinkItemId = intent.getStringExtra("deepLinkItemId");
+        if  (deepLinkItemId == null) {
+            item = itemDao.findById(intent.getIntExtra("itemId", 1));
+        } else {
+            item = itemDao.findById(Integer.parseInt(deepLinkItemId));
+        }
+        /**
+         * Circuit SDK導入時の編集箇所 - ここまで
+         */
 
         ImageView itemImageImageView = (ImageView) findViewById(R.id.item_image);
         itemImageImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), item.getImageId()));
