@@ -47,7 +47,7 @@
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
         <meta-data android:name="io.cir.DeepLinkSupporter.APP_ID"
-            android:value="xxxxxxxxxxx"/><!-- ここにはCircuitから発行された固有値を指定してください -->
+            android:value="a0000062465"/><!-- ここにはCircuitから発行された固有値を指定してください -->
         <!-- Circuit SDK導入時の編集箇所 - ここまで -->
     </application>
 
