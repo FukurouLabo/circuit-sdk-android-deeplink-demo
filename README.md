@@ -28,3 +28,6 @@ $ git checkout -b use-circuit origin/use-circuit
 * トップページ :http://www.cir.io/
 * ドキュメント :https://developer.cir.io/doc/cds
 * FAQ :https//developer.cir.io/faq/cds
+
+#### Licence
+The source code is released under Apache 2.0.
