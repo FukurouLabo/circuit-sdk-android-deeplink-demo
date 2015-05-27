@@ -28,5 +28,5 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.0'
-    compile 'io.cir:Circuit:1.0.0'
+    compile 'io.cir:Circuit:1.1.0'
 }
