@@ -12,11 +12,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.content.Intent;
+import android.widget.Toast;
 
 import io.cir.demoapp.adapter.ItemListViewAdapter;
 import io.cir.demoapp.dao.ItemDao;
 import io.cir.demoapp.dto.ItemListViewDto;
 import io.cir.demoapp.entity.ItemEntity;
+
+import io.cir.CircuitDirect;
+import io.cir.CircuitDirectException;
+import io.cir.DirectInfo;
 
 /**
  * トップ画面 = アイテム一覧表示画面用Activity
@@ -31,6 +36,26 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ここからCircuit
+        CircuitDirect.getDirectInfo(this, new CircuitDirect.GetLinkListener() {
+            @Override
+            public void onSuccess(DirectInfo directInfo) {
+                // ここにディープリンク実行処理を記述します。
+                // 以下のコードはディープリンクを御社独自実装あるいは他社SDKにて実装されている際の一例となります。
+                try {
+                    int item_id = Integer.parseInt(directInfo.getDirectLinkQueryStrings().get("item_id").toString());
+                    Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+                    intent.putExtra("itemId", item_id);
+                    startActivity(intent);
+                } catch (Exception e){
+                }
+            }
+            @Override
+            public void onError(CircuitDirectException e) {
+                Toast.makeText(MainActivity.this, "Failed to get direct info", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         DemoAppSQLiteOpenHelper helper = new DemoAppSQLiteOpenHelper(getApplicationContext());
         itemDao = new ItemDao(helper.getWritableDatabase());
@@ -80,5 +105,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // ここからCircuit
+        CircuitDirect.onPause(this);
+        // ここまでCircuit
     }
 }
