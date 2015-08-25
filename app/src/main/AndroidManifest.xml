@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.cir.demoapp" >
 
+    <!-- INTERNETとACCESS_NETWORK_STATEを使用します -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:name="DemoAppApplication"
         android:allowBackup="true"
@@ -29,6 +32,30 @@
             android:name=".thanksActivity"
             android:label="@string/title_activity_thanks" >
         </activity>
+        <!-- CircuitDeepLinkSupporterとの共通箇所 -->
+        <activity
+            android:name="io.cir.DeepLinkSupporterActivity"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:noHistory="true">
+            <intent-filter>
+                <data android:scheme="circuitdemo"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+        </activity>
+        <!-- 広告IDの取得をGoogle Play Servicesで行います -->
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <!-- CircuitDeepLinkSupporterとの共通箇所ここまで -->
+        <!-- CircuitDirectの設定 -->
+        <receiver
+            android:name="io.cir.CircuitDirectReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER"/>
+            </intent-filter>
+        </receiver>
+        <!-- CircuitDirectの設定ここまで -->
     </application>
-
 </manifest>
