@@ -12,6 +12,7 @@ Circuit SDKの導入前/導入後の状態をブランチ分けして用意し�
 * use-circuit:Circuit SDKにてCircuitディープリンクサポーターを導入済みのブランチとなります。
 * use-cdr    :Circuit SDKにてCircuitDirectを導入済みのブランチとなります。
 
+
 ## Circuitディープリンクサポーター
 
 #### 動作確認手順
@@ -30,6 +31,7 @@ $ git checkout -b use-circuit origin/use-circuit
 #### 導入手順詳細ドキュメント
 * https://developer.cir.io/doc/cds
 
+
 ## CircuitDirect
 
 #### 動作確認手順
@@ -40,10 +42,15 @@ $ cd circuit-sdk-android-deeplink-demo
 $ git checkout -b use-cdr origin/use-cdr
 ```
 * AndroidStudioを起動し、circuit-sdk-android-deeplink-demoプロジェクトを開く。
-* アプリをビルドし、端末上からアプリを一度削除してからadbコマンドにてアプリを再インストールし、後述のダイレクトリンクからアプリを初回起動する。
+* アプリをビルドし、端末上からアプリを一度削除してからadbコマンドにてアプリを再インストールする。続いて後述のダイレクトリンクにてadbコマンドを発行して実行。
+```
+$ adb install {ビルドしたアプリのデバッグ用apkファイル名}.apk
+$ adb shell am broadcast -a com.android.vending.INSTALL_REFERRER -n io.cir.demoapp/io.cir.CircuitDirectReceiver --es referrer {ダイレクトリンクにて発行されたtoken}
+```
+* アプリを初回起動する。商品詳細ページが表示されれば成功です。
 
 #### 設定済みダイレクトリンク
-* 商品詳細ページ:https://dr.cir.io/ur/Qked4Q?item_id={商品番号(1 ~ 3)}
+* 商品詳細ページ:https://dr.cir.io/ur/Qked4Q?item_id={商品番号(1 ~ 3)}&cdr_android_referrer_test_mode=true
 
 #### 導入手順詳細ドキュメント
 * https://developer.cir.io/doc/circuit-direct
