@@ -17,6 +17,7 @@ import io.cir.demoapp.adapter.ItemListViewAdapter;
 import io.cir.demoapp.dao.ItemDao;
 import io.cir.demoapp.dto.ItemListViewDto;
 import io.cir.demoapp.entity.ItemEntity;
+import io.cir.x.ButtonCreativeView;
 
 /**
  * トップ画面 = アイテム一覧表示画面用Activity
@@ -31,6 +32,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButtonCreativeView button = (ButtonCreativeView) findViewById(android.R.id.button1);
+        button.loadCreative("xta33987");
 
         DemoAppSQLiteOpenHelper helper = new DemoAppSQLiteOpenHelper(getApplicationContext());
         itemDao = new ItemDao(helper.getWritableDatabase());
